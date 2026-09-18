@@ -4,6 +4,11 @@ import Hero from "./components/Hero";
 import AboutSection from "./components/AboutSection";
 import TeamsSection from "./components/TeamsSection";
 import FixturesSection from "./components/FixturesSection";
+import NewsSection from "./components/NewsSection";
+import SponsorsSection from "./components/SponsorsSection";
+import JoinSection from "./components/JoinSection";
+import Footer from "./components/Footer";
+import GallerySection from "./components/GallerySection";
 
 function App() {
   return (
@@ -15,6 +20,13 @@ function App() {
         <AboutSection />
         <TeamsSection />
         <FixturesSection />
+        <NewsSection />
+        <NewsSection />
+        <NewsSection />
+        <GallerySection />
+        <SponsorsSection />
+        <JoinSection />
+        <Footer />
       </main>
     </div>
   );
