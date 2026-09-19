@@ -9,6 +9,7 @@ import SponsorsSection from "./components/SponsorsSection";
 import JoinSection from "./components/JoinSection";
 import Footer from "./components/Footer";
 import GallerySection from "./components/GallerySection";
+import BackToTop from "./components/BackToTop";
 
 function App() {
   return (
@@ -21,12 +22,11 @@ function App() {
         <TeamsSection />
         <FixturesSection />
         <NewsSection />
-        <NewsSection />
-        <NewsSection />
         <GallerySection />
         <SponsorsSection />
         <JoinSection />
         <Footer />
+        <BackToTop />
       </main>
     </div>
   );

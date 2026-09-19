@@ -1070,6 +1070,35 @@ a {
     min-height: 260px;
   }
 }
+.back-to-top {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 999;
+
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 50%;
+
+  background: linear-gradient(135deg, var(--red), var(--orange));
+  color: white;
+
+  font-size: 24px;
+  font-weight: 700;
+
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.back-to-top:hover {
+  transform: translateY(-3px);
+}
 /* ---------- RESPONSIVE ---------- */
 
 @media (max-width: 1100px) {
@@ -1095,7 +1124,27 @@ a {
   .nav-links {
     display: none;
   }
+  .nav-links.nav-open {
+    display: flex;
+    position: absolute;
+    top: 75px;
+    left: 20px;
+    right: 20px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 8px 0;
+    background: #06223b;
+    border-radius: 12px;
+    z-index: 1000;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  }
 
+  .nav-links.nav-open a {
+    width: auto;
+    padding: 9px 20px;
+    text-align: center;
+  }
   .hero {
     width: min(100% - 30px, 1500px);
     grid-template-columns: 1fr;
@@ -1257,17 +1306,49 @@ a {
     padding: 12px 18px;
   }
 
+  .hero {
+    min-height: auto;
+    padding-top: 5px;
+    padding-bottom: 30px;
+  }
+
+  .hero-right {
+    max-height: 300px;
+  }
+
+  .hero-image {
+    width: 100%;
+    max-width: 380px;
+  }
+
   .hero h1 {
-    font-size: 58px;
+    font-size: 46px;
+    line-height: 0.9;
   }
 
   .hero h2 {
-    font-size: 26px;
+    margin: 20px 0 12px;
+    font-size: 24px;
+  }
+
+  .hero-text {
+    font-size: 15px;
+    line-height: 1.6;
   }
 
   .hero-buttons {
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .primary-button,
+  .secondary-button {
+    flex: 1;
+    padding: 12px 10px;
+    font-size: 13px;
+    text-align: center;
   }
 
   .benefits {
@@ -1283,4 +1364,52 @@ a {
   .benefits div:last-child {
     border-bottom: 0;
   }
+  .fixture-row {
+    grid-template-columns: 70px 1fr;
+    gap: 14px;
+    padding: 18px;
+  }
+
+  .fixture-date {
+    border-right: 1px solid rgba(6, 27, 49, 0.18);
+  }
+
+  .fixture-date span {
+    font-size: 20px;
+  }
+
+  .fixture-match {
+    padding: 0;
+  }
+
+  .fixture-teams {
+    justify-content: center;
+    gap: 8px;
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .fixture-match p {
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  .fixture-time {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding-top: 12px;
+    border-top: 1px solid rgba(6, 27, 49, 0.12);
+    font-size: 20px;
+  }
+  .back-to-top {
+    right: 16px;
+    bottom: 16px;
+    width: 44px;
+    height: 44px;
+    font-size: 21px;
+  }
+}
+html,
+body {
+  overflow-x: hidden;
 }

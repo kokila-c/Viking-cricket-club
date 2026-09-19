@@ -18,7 +18,9 @@ function Hero() {
           </p>
 
           <div className="hero-buttons">
-            <button className="primary-button">Join Our Club →</button>
+            <a href="#contact" className="primary-button">
+              Join Our Club →
+            </a>
             <button className="secondary-button">Watch Our Story</button>
           </div>
         </div>
