@@ -1,6 +1,23 @@
-import news from "../data/news";
+import { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase";
 
 function NewsSection() {
+  const [news, setNews] = useState([]);
+  useEffect(() => {
+    async function fetchNews() {
+      const querySnapshot = await getDocs(collection(db, "news"));
+
+      const newsData = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      setNews(newsData);
+    }
+
+    fetchNews();
+  }, []);
   return (
     <section className="news-section" id="news">
       <div className="news-container">

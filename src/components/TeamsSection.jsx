@@ -1,6 +1,24 @@
-import teams from "../data/teams";
+import { useEffect, useState } from "react";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { db } from "../firebase";
 
 function TeamsSection() {
+  const [teams, setTeams] = useState([]);
+
+  useEffect(() => {
+    const teamsQuery = query(collection(db, "teams"), orderBy("order", "asc"));
+
+    const unsubscribe = onSnapshot(teamsQuery, (snapshot) => {
+      const teamsData = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      setTeams(teamsData);
+    });
+
+    return () => unsubscribe();
+  }, []);
   return (
     <section className="teams-section" id="teams">
       <div className="teams-header">
