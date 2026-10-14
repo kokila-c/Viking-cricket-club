@@ -1,83 +1,91 @@
 import { useEffect, useRef, useState } from "react";
+import WavingFlag from "./WavingFlag";
 
-function Navbar() {
+export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const navbarRef = useRef(null);
-
+  const toggleRef = useRef(null);
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (navbarRef.current && !navbarRef.current.contains(event.target)) {
+    function outside(event) {
+      if (!navbarRef.current?.contains(event.target)) setMenuOpen(false);
+    }
+    function escape(event) {
+      if (event.key === "Escape") {
         setMenuOpen(false);
+        toggleRef.current?.focus();
       }
     }
-
-    document.addEventListener("mousedown", handleClickOutside);
-
+    document.addEventListener("pointerdown", outside);
+    document.addEventListener("keydown", escape);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("pointerdown", outside);
+      document.removeEventListener("keydown", escape);
     };
   }, []);
-
+  const links = [
+    ["Home", "home"],
+    ["About", "about"],
+    ["Teams", "teams"],
+    ["Fixtures", "fixtures"],
+    ["News", "news"],
+    ["Membership", "membership"],
+    ["Gallery", "gallery"],
+    ["Contact", "contact"],
+  ];
   return (
     <header className="navbar" ref={navbarRef}>
-      <div className="logo-area">
+      <a
+        className="logo-area"
+        href="#home"
+        aria-label="Viking Cricket Club home"
+      >
         <img
-          src="/viking-logo.png"
+          src={`${import.meta.env.BASE_URL}viking-logo-transparent.png`}
           alt="Viking Cricket Club logo"
           className="club-logo"
+          width="76"
+          height="58"
         />
-
         <div>
           <p className="club-name">Viking Cricket Club</p>
           <span className="club-tagline">Play · Learn · Belong</span>
         </div>
-      </div>
-
-      <nav className={`nav-links ${menuOpen ? "nav-open" : ""}`}>
-        <a href="#home" onClick={() => setMenuOpen(false)}>
-          Home
-        </a>
-        <a href="#about" onClick={() => setMenuOpen(false)}>
-          About
-        </a>
-        <a href="#teams" onClick={() => setMenuOpen(false)}>
-          Teams
-        </a>
-        <a href="#fixtures" onClick={() => setMenuOpen(false)}>
-          Fixtures
-        </a>
-        <a href="#news" onClick={() => setMenuOpen(false)}>
-          News
-        </a>
-        <a href="#contact" onClick={() => setMenuOpen(false)}>
-          Membership
-        </a>
-        <a href="#gallery" onClick={() => setMenuOpen(false)}>
-          Gallery
-        </a>
-        <a href="#contact" onClick={() => setMenuOpen(false)}>
-          Contact
-        </a>
-      </nav>
-
-      <button
-        className="menu-button"
-        onClick={() => setMenuOpen((open) => !open)}
-        aria-label="Toggle navigation menu"
-        aria-expanded={menuOpen}
-      >
-        ☰
-      </button>
-
-      <a
-        className="join-button"
-        href="#contact"
-        onClick={() => setMenuOpen(false)}
-      >
-        Join Us
       </a>
+      <span className="header-flag">
+        <WavingFlag />
+      </span>
+      <nav
+        id="primary-navigation"
+        className={`nav-links ${menuOpen ? "nav-open" : ""}`}
+        aria-label="Main navigation"
+      >
+        {links.map(([label, id]) => (
+          <a key={id} href={`#${id}`} onClick={() => setMenuOpen(false)}>
+            {label}
+          </a>
+        ))}
+      </nav>
+      <div className="navbar-actions">
+        <a
+          className="join-button"
+          href="#membership"
+          onClick={() => setMenuOpen(false)}
+        >
+          Join Us <span aria-hidden="true">↗</span>
+        </a>
+        <button
+          ref={toggleRef}
+          className="menu-button"
+          onClick={() => setMenuOpen((open) => !open)}
+          aria-label={
+            menuOpen ? "Close navigation menu" : "Open navigation menu"
+          }
+          aria-expanded={menuOpen}
+          aria-controls="primary-navigation"
+        >
+          {menuOpen ? "×" : "☰"}
+        </button>
+      </div>
     </header>
   );
 }
-
-export default Navbar;

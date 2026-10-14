@@ -23,7 +23,17 @@ function AboutSection() {
       </div>
 
       <div className="about-image">
-        <div className="image-placeholder">Club / Team Photo</div>
+        <figure className="about-community">
+          <img
+            src={`${import.meta.env.BASE_URL}about-community-lineart.png`}
+            alt="Off-white cricket line art of adults encouraging two children on a navy background"
+            width="1448"
+            height="1086"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>Community cricket · Prototype illustration</figcaption>
+        </figure>
       </div>
 
       <div className="about-quote">

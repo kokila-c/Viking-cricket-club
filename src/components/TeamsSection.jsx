@@ -1,56 +1,64 @@
-import { useEffect, useState } from "react";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
-import { db } from "../firebase";
+import teams from "../data/teams";
+import CricketIllustration from "./CricketIllustration";
 
-function TeamsSection() {
-  const [teams, setTeams] = useState([]);
-
-  useEffect(() => {
-    const teamsQuery = query(collection(db, "teams"), orderBy("order", "asc"));
-
-    const unsubscribe = onSnapshot(teamsQuery, (snapshot) => {
-      const teamsData = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-
-      setTeams(teamsData);
-    });
-
-    return () => unsubscribe();
-  }, []);
+export default function TeamsSection({ onJoin, onDetails }) {
   return (
-    <section className="teams-section" id="teams">
+    <section className="teams-section" id="teams" aria-labelledby="teams-title">
       <div className="teams-header">
         <p className="eyebrow">OUR TEAMS</p>
-        <h2>Cricket for Everyone</h2>
+        <h2 id="teams-title">Cricket for Everyone</h2>
         <p>
-          From competitive cricket to learning the game, Viking Cricket Club
-          offers opportunities for players of different ages and experience
-          levels.
+          From competitive cricket to learning the game, there’s a team and a
+          community for every stage of your journey.
         </p>
       </div>
-
       <div className="teams-grid">
-        {teams.map((team) => (
+        {teams.map((team, i) => (
           <article className="team-card" key={team.id}>
-            <div className="team-image-placeholder">
-              <span>{team.name}</span>
+            <div className="team-art">
+              <span className="team-number">0{i + 1}</span>
+              <CricketIllustration
+                scene={i === 1 ? "ball" : i === 2 ? "community" : "wicket"}
+              />
+              <span className="art-caption">
+                {
+                  [
+                    "TRAIN · COMPETE · EXCEL",
+                    "STRONGER TOGETHER",
+                    "PLAY · LEARN · GROW",
+                  ][i]
+                }
+              </span>
             </div>
-
             <div className="team-card-content">
               <h3>{team.name}</h3>
               <p>{team.description}</p>
-
-              <a href="#contact" className="team-link">
-                Learn More →
-              </a>
+              <div className="team-actions">
+                <button
+                  type="button"
+                  className="team-link"
+                  onClick={() => onDetails(team)}
+                >
+                  About this team ↗
+                </button>
+                <a
+                  href="#membership"
+                  className="team-link"
+                  onClick={() => onJoin(team.name)}
+                >
+                  Join this team →
+                </a>
+              </div>
             </div>
           </article>
         ))}
       </div>
+      <p className="social-cricket-note">
+        Here for a friendly game?{" "}
+        <a href="#membership" onClick={() => onJoin("Social Cricket")}>
+          Explore social cricket →
+        </a>
+      </p>
     </section>
   );
 }
-
-export default TeamsSection;

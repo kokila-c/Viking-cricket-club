@@ -18,23 +18,27 @@ function Hero() {
           </p>
 
           <div className="hero-buttons">
-            <a href="#contact" className="primary-button">
+            <a href="#membership" className="primary-button">
               Join Our Club →
             </a>
-            <button className="secondary-button">Watch Our Story</button>
+            <a href="#about" className="secondary-button">
+              Discover Viking ↗
+            </a>
           </div>
         </div>
 
         <div className="hero-right">
           <img
-            src="/hero-lineart.png"
+            src={`${import.meta.env.BASE_URL}hero-lineart.png`}
             alt="Cricket batsman illustration"
             className="hero-image"
+            width="245"
+            height="168"
           />
         </div>
       </section>
 
-      <section className="benefits">
+      <section className="benefits" aria-label="Our club values">
         <div>
           <strong>Inclusive</strong>
           <span>All are welcome</span>

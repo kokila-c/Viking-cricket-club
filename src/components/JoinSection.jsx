@@ -1,51 +1,47 @@
-function JoinSection() {
+import { demoContact } from "../data/contact";
+
+export default function JoinSection({ onDemoContact }) {
   return (
-    <section className="join-section" id="contact">
-      <div className="join-container">
-        <p className="section-eyebrow">JOIN VIKING</p>
-
-        <h2>Ready to Play?</h2>
-
-        <p className="join-intro">
-          Whether you're an experienced player or completely new to cricket,
-          there's a place for you at Viking Cricket Club.
-        </p>
-
-        <div className="join-options">
-          <div className="join-option">
-            <span>01</span>
-            <h3>Join the Club</h3>
-            <p>
-              Become part of Viking Cricket Club and play, learn and grow with
-              our cricket community.
-            </p>
-          </div>
-
-          <div className="join-option">
-            <span>02</span>
-            <h3>Try Cricket</h3>
-            <p>
-              New to cricket? Come along to a training session and experience
-              the game before joining.
-            </p>
-          </div>
-
-          <div className="join-option">
-            <span>03</span>
-            <h3>Get in Touch</h3>
-            <p>
-              Have questions about teams, training or membership? We'd be happy
-              to hear from you.
-            </p>
-          </div>
+    <section
+      className="contact-section"
+      id="contact"
+      aria-labelledby="contact-title"
+    >
+      <div className="contact-container">
+        <div>
+          <p className="section-eyebrow">LET’S TALK CRICKET</p>
+          <h2 id="contact-title">See you at the boundary.</h2>
+          <p>
+            Questions about joining, trying cricket or supporting the club?
+            Explore the contact experience and find your place in the game.
+          </p>
+          <p className="contact-demo-label">
+            Portfolio demo · Contact details below are fictional.
+          </p>
         </div>
-
-        <a className="join-contact-button" href="mailto:YOUR-CLUB-EMAIL">
-          Contact Us →
-        </a>
+        <div className="contact-details">
+          <button
+            type="button"
+            className="contact-card"
+            onClick={() => onDemoContact("email")}
+          >
+            <small>DEMO EMAIL</small>
+            <strong>{demoContact.email} ↗</strong>
+          </button>
+          <button
+            type="button"
+            className="contact-card"
+            onClick={() => onDemoContact("phone")}
+          >
+            <small>DEMO PHONE</small>
+            <strong>{demoContact.phone} ↗</strong>
+          </button>
+          <p>Stavanger, Norway · All ages and experience levels welcome.</p>
+          <a href="#membership" className="primary-button">
+            Explore membership →
+          </a>
+        </div>
       </div>
     </section>
   );
 }
-
-export default JoinSection;

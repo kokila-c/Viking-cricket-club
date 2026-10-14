@@ -1,62 +1,76 @@
-import { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebase";
+import { useState } from "react";
+import news from "../data/news";
+import CricketIllustration from "./CricketIllustration";
 
-function NewsSection() {
-  const [news, setNews] = useState([]);
-  useEffect(() => {
-    async function fetchNews() {
-      const querySnapshot = await getDocs(collection(db, "news"));
-
-      const newsData = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-
-      setNews(newsData);
-    }
-
-    fetchNews();
-  }, []);
+export default function NewsSection({ onStory }) {
+  const [filter, setFilter] = useState("All stories");
+  const categories = [
+    "All stories",
+    ...new Set(news.map((item) => item.category)),
+  ];
   return (
-    <section className="news-section" id="news">
+    <section className="news-section" id="news" aria-labelledby="news-title">
       <div className="news-container">
         <div className="news-header">
           <div>
             <p className="section-eyebrow">LATEST STORIES</p>
-            <h2>From the Club</h2>
+            <h2 id="news-title">From the Club</h2>
           </div>
-
-          <a href="#news" className="view-all-news">
-            View All News →
-          </a>
+          <span className="small-tag">SAMPLE STORIES</span>
         </div>
-
-        <div className="news-grid">
-          {news.map((item) => (
-            <article className="news-card" key={item.id}>
-              <div className="news-image-placeholder">News Image</div>
-
-              <div className="news-card-content">
-                <div className="news-meta">
-                  <span>{item.category}</span>
-                  <span>{item.date}</span>
-                </div>
-
-                <h3>{item.title}</h3>
-
-                <p>{item.description}</p>
-
-                <a href="#news" className="read-more">
-                  Read Story →
-                </a>
-              </div>
-            </article>
+        <div
+          className="filter-buttons filter-light"
+          role="group"
+          aria-label="Filter news"
+        >
+          {categories.map((category) => (
+            <button
+              type="button"
+              key={category}
+              aria-pressed={filter === category}
+              onClick={() => setFilter(category)}
+            >
+              {category}
+            </button>
           ))}
+        </div>
+        <div className="news-grid" aria-live="polite">
+          {news
+            .filter(
+              (item) => filter === "All stories" || item.category === filter,
+            )
+            .map((item) => (
+              <article className="news-card" key={item.id}>
+                <div className="news-art">
+                  <CricketIllustration
+                    scene={
+                      item.id === 2
+                        ? "ball"
+                        : item.id === 3
+                          ? "community"
+                          : "wicket"
+                    }
+                  />
+                </div>
+                <div className="news-card-content">
+                  <div className="news-meta">
+                    <span>{item.category}</span>
+                    <span>{item.date}</span>
+                  </div>
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                  <button
+                    type="button"
+                    className="read-more"
+                    onClick={() => onStory(item)}
+                  >
+                    Read story →
+                  </button>
+                </div>
+              </article>
+            ))}
         </div>
       </div>
     </section>
   );
 }
-
-export default NewsSection;
